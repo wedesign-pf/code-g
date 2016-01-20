@@ -1,0 +1,6 @@
+{$PUBLICITE_11}
+aaa
+{$PUBLICITE_12}
+bbbb
+{$PUBLICITE_13}
+ccc

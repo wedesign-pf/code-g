@@ -1,0 +1,41 @@
+#faq_accordion {
+
+}
+
+#faq_accordion .blocQR{
+	
+}
+
+#faq_accordion .question {
+    margin-top:10px;
+	cursor:pointer;
+    color:rgba(0,79,159,1);
+	padding:10px 15px;
+    background-color: rgba(230,230,230,1);
+    transition: all 0.2s linear;
+}
+#faq_accordion .question:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f0da";
+    font-size:1em;
+    margin-right:10px;
+}
+
+#faq_accordion .question:hover {
+	color: #fff;
+	background-color:rgba(0,79,159,1);
+}
+
+#faq_accordion .actif {
+	color: #fff;
+	background-color: rgba(227,6,19,1);	
+}
+#faq_accordion .actif:before {
+    content: "\f0d7";
+}
+
+#faq_accordion .reponse {
+    display:none;
+	padding:0px 15px;	
+    padding-bottom:20px;
+}
