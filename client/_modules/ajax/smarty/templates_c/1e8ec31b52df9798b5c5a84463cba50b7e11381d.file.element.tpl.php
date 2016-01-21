@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 12:13:13
+<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 13:50:04
          compiled from "element.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2992656a00679289069-35816476%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:869356a01d2c5c9155-94444916%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1e8ec31b52df9798b5c5a84463cba50b7e11381d' => 
     array (
       0 => 'element.tpl',
-      1 => 1453327544,
+      1 => 1453332823,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2992656a00679289069-35816476',
+  'nocache_hash' => '869356a01d2c5c9155-94444916',
   'function' => 
   array (
   ),
@@ -33,9 +33,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.16',
-  'unifunc' => 'content_56a006794ea663_32300616',
+  'unifunc' => 'content_56a01d2c82a753_81002348',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_56a006794ea663_32300616')) {function content_56a006794ea663_32300616($_smarty_tpl) {?><div class="container-fluid">
+<?php if ($_valid && !is_callable('content_56a01d2c82a753_81002348')) {function content_56a01d2c82a753_81002348($_smarty_tpl) {?><div class="container-fluid">
 <div class="col-lg-12">
 <!-- Row top nav -->
 <div class="row">
@@ -77,6 +77,11 @@ $_smarty_tpl->tpl_vars['categorie']->_loop = true;
                 </div>
             </div> 
         </nav><!-- ./Top nav wrapper -->
+    </div>
+    <div id="Notify">
+        <div class="message">
+            <h4>&Eacute;lément mis à jour &nbsp;&nbsp;&nbsp;<i class="fa fa-check-circle"></i></h4>
+        </div>
     </div>
 </div><!-- /.Row top nav -->
 </div><!-- /.col-lg-12 -->

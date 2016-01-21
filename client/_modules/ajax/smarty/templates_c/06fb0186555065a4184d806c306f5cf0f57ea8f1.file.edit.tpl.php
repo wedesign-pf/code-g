@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 12:34:09
+<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 13:56:14
          compiled from "edit.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1761056a00b615f1b45-79242981%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1348156a01e9ea917f3-95779057%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06fb0186555065a4184d806c306f5cf0f57ea8f1' => 
     array (
       0 => 'edit.tpl',
-      1 => 1453329246,
+      1 => 1453333995,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1761056a00b615f1b45-79242981',
+  'nocache_hash' => '1348156a01e9ea917f3-95779057',
   'function' => 
   array (
   ),
@@ -29,9 +29,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.16',
-  'unifunc' => 'content_56a00b6175f547_78789324',
+  'unifunc' => 'content_56a01e9ebff1f5_85399791',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_56a00b6175f547_78789324')) {function content_56a00b6175f547_78789324($_smarty_tpl) {?><div class="modal-header">
+<?php if ($_valid && !is_callable('content_56a01e9ebff1f5_85399791')) {function content_56a01e9ebff1f5_85399791($_smarty_tpl) {?><div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">Modifier l'élément #<?php echo $_smarty_tpl->tpl_vars['id_element']->value;?>
 </h4>
@@ -189,10 +189,35 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
             cache:false,
             url: 'client/_modules/ajax/element-maj-submit.php',
             data:formData,
-            dataType: 'html',
+            dataType: 'json',
                 success: function(data){
                     
-                    $("#submitForm").empty().append(data);
+                    if(data.message == 'success'){
+
+                        // Fermer le modal
+                         $('#formEdit').modal( 'hide' );
+                        
+                        // afficher un petit message d'alert
+                         $('#Notify').css('display','block');
+                         $( "#Notify" ).animate({
+                            right: 0
+                          }, 800, function() {
+                                $('#Notify').delay(2000).fadeOut('slow', function(){
+                                    $('#Notify').css('right','-300px');
+                                });
+                          });
+                        
+                        // Colorer la partie le panel de l'élément modifier
+                        
+                        
+                        
+                        // Recharger l'élément en question 
+                            // Sinon
+                        // Changer les éléments en utilisant le Dom
+
+                   }else{
+                       alert('Une erreur s\'est produit lors de la soumission');
+                   }
                 }
         });  
         

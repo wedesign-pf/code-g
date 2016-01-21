@@ -125,10 +125,35 @@
             cache:false,
             url: 'client/_modules/ajax/element-maj-submit.php',
             data:formData,
-            dataType: 'html',
+            dataType: 'json',
                 success: function(data){
                     
-                    $("#submitForm").empty().append(data);
+                    if(data.message == 'success'){
+
+                        // Fermer le modal
+                         $('#formEdit').modal( 'hide' );
+                        
+                        // afficher un petit message d'alert
+                         $('#Notify').css('display','block');
+                         $( "#Notify" ).animate({
+                            right: 0
+                          }, 800, function() {
+                                $('#Notify').delay(2000).fadeOut('slow', function(){
+                                    $('#Notify').css('right','-300px');
+                                });
+                          });
+                        
+                        // Colorer la partie le panel de l'élément modifier
+                        
+                        
+                        
+                        // Recharger l'élément en question 
+                            // Sinon
+                        // Changer les éléments en utilisant le Dom
+
+                   }else{
+                       alert('Une erreur s\'est produit lors de la soumission');
+                   }
                 }
         });  
         

@@ -216,23 +216,20 @@ class Controller{
         $idElement = $tableau['id_element'];
         $titreElement = $new = htmlspecialchars($tableau['titre_element'], ENT_QUOTES);
 
-        
-        
-        
-        echoa($idElement);
-        echoa($titreElement);
-
-
-        echoa($tableau);
-        
         // Changer le titre de l'élément
         
         $PDO = new myPDO(); 
         
         $result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements SET titre='$titreElement' WHERE id=$idElement");
         //$result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements SET titre='TESTING' WHERE id=$idElement" );
-        
-        
+
+        if(isset($result)){
+            $tab = array('message' => 'success');
+            echo json_encode($tab);
+        }else{
+            $tab = array('message' => 'error');
+            echo json_encode($tab);
+        }
         
     }
     

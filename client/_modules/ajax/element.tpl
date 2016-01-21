@@ -31,6 +31,11 @@
             </div> 
         </nav><!-- ./Top nav wrapper -->
     </div>
+    <div id="Notify">
+        <div class="message">
+            <h4>&Eacute;lément mis à jour &nbsp;&nbsp;&nbsp;<i class="fa fa-check-circle"></i></h4>
+        </div>
+    </div>
 </div><!-- /.Row top nav -->
 </div><!-- /.col-lg-12 -->
 </div><!-- /.Container-fluid -->
@@ -165,7 +170,7 @@
     });
 
 
-    // Clique sur bouton editer
+    // Clique sur bouton modifier
     $(".panel").on("click",".panel-heading button.editer", function(event){
 
 
@@ -198,37 +203,6 @@
         
     });
 
-    
- 
-    
-    
-    
-   /* $(".panel-heading button.modifier").click(function(event){
-
-
-
-        var IdElement = $(this).attr("data-id-element");
-
-        $("#page-wrapper").fadeOut();
-        $("#loader-gif").fadeIn();
-
-        $.ajax({
-            type: "GET",
-            cache:false,
-            url: 'client/_modules/ajax/element-maj.php',
-            data:"idelement="+IdElement,
-            dataType: 'html',
-                success: function(donnee) {
-
-                    $("#page-wrapper").empty();
-                    $("#page-wrapper").append(donnee);
-                    $("#loader-gif").fadeOut();
-                    $("#page-wrapper").fadeIn();
-                    }
-        });
-
-
-    });*/
 
 </script>
 
