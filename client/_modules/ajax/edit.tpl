@@ -1,4 +1,5 @@
 <div class="modal-header">
+    <span id="onglet" style="display:none;">{$onglet}</span>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">Modifier l'élément #{$id_element}</h4>
 </div>
@@ -113,11 +114,12 @@
     
     /* Soumission du formulaire */
     $("#editForm").submit(function(event) {
+
         
         event.preventDefault();
-        
+
         var formData = $(this).serialize();
-        
+
         
         // Faire un appel en ajax pour le traitement de donnée
         $.ajax({
@@ -127,10 +129,10 @@
             data:formData,
             dataType: 'json',
                 success: function(data){
-                    
-                    if(data.message == 'success'){
 
-                        // Fermer le modal
+                    if(data.message == 'success'){
+                        
+                        // Fermer le formulaire
                          $('#formEdit').modal( 'hide' );
                         
                         // afficher un petit message d'alert
@@ -143,13 +145,51 @@
                                 });
                           });
                         
-                        // Colorer la partie le panel de l'élément modifier
-                        
-                        
-                        
-                        // Recharger l'élément en question 
-                            // Sinon
-                        // Changer les éléments en utilisant le Dom
+
+                         // Aprés l'enregistrement des valeurs, récupérer directement ces dernières
+                         // pour les ajouter dans le panel. Cela évite de recharger la pages
+                         $('#page-wrapper #panel-element').each(function(index){
+                  
+                                
+                             var CurrentPanelValue = $(this).attr('data-panel');
+                             
+                             
+                             if(data.id_element == CurrentPanelValue){
+                                 
+                                 var titleElement = $(this).find('h5');
+                                 var remarquesElement = $(this).find('span.remarques');
+                                 var Onglet = $("#onglet").text();                         
+                                 var ClearPanel = data.clear_panel;
+                                 
+
+                                 titleElement.empty().append(data.titre_element);
+                                 remarquesElement.empty().append(data.remarques);
+                                 
+                                 if(remarquesElement.html() == null && data.remarques){
+                                    $(this).find('.panel-body .row:last-child').html("<div class='col-sm-12 col-md-2'><span><strong>Remarques</strong></span><br><br></div><div class='col-sm-12 col-md-8'><span class='champValue remarques'>"+data.remarques+"</span></div>"
+                                    );
+                                  }
+                                 
+                                 if(ClearPanel == true){
+                                     $(this).parent().parent().empty();
+                                 }
+
+                                 
+                                 /* Afficher les valeurs modifiés */
+                                 var valeursChamps = $(this).find('span#champValue');
+                                 
+                                 valeursChamps.each(function(){
+
+                                     var idChampValeur = $(this).attr('data-id-champ');                                     
+                                     var ChampValeur = data.valeurs[idChampValeur];
+                                     
+                                     $(this).empty().append(ChampValeur);
+                                     
+                                 });
+                             }
+                                 
+                         });
+
 
                    }else{
                        alert('Une erreur s\'est produit lors de la soumission');

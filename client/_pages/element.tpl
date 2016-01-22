@@ -88,28 +88,29 @@
                         </div><!-- /.Panel Heading -->
                         <!-- Panel Body -->
                         <div class="panel-body element">
+                            {foreach $list_elements_champs[$kElement] as $k => $row}
                             <div class="row">
-                                <div class="col-sm-2">
-                                    {foreach $list_Champ_Valeur[$kElement]['champ'] as $KlistChamp => $Champ}
-                                    <span><strong>{$Champ}</strong></span><br><br>
-                                    {/foreach}
-                                    {if $vElement['remarques']}
-                                    <span><strong>Remarques</strong></span><br><br>
-                                    {/if}
+                                <div class="col-sm-12 col-md-2">
+                                    <span><strong>{$row['champ']}</strong></span><br><br>
                                 </div>
-                                <div class="col-sm-8 listChamp">
-                                    {foreach $list_Champ_Valeur[$kElement]['valeur'] as $KlistValeur => $Valeur}
-                                    <span id="champValue" class="champValue">{$Valeur['valeur']}</span>
+                                <div class="col-sm-12 col-md-8 listChamp">
+                                    <span id="champValue" class="champValue" data-id-champ="{$row['id']}">{$row['valeur']}</span>
                                     <a  id="clipboard" data-toggle="tooltip" data-placement="right" data-original-title="Copier l'élément">
                                         <i class="fa fa-clipboard"></i>
                                     </a>
-                                    <br><br>
-                                    {/foreach}
-                                    {if $vElement['remarques']}
-                                    <span class="champValue">{$vElement['remarques']}</span>
-                                    {/if}
                                 </div>
                             </div>
+                            {/foreach}
+                            <!--{if $vElement['remarques']}-->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-2">
+                                    <span><strong>Remarques</strong></span><br><br>
+                                </div>
+                                <div class="col-sm-12 col-md-8">
+                                    <span class="champValue remarques">{$vElement['remarques']}</span>
+                                </div>
+                            </div>
+                            <!--{/if}-->
                         </div><!-- /.Panel Body -->
                     </div>
                 </div>

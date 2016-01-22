@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 13:50:03
+<?php /* Smarty version Smarty-3.1.16, created on 2016-01-21 16:05:44
          compiled from "client\_modules\_favicon\favicon.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2636856a01d2b555732-17869628%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2820556a18e78469b75-26608811%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2636856a01d2b555732-17869628',
+  'nocache_hash' => '2820556a18e78469b75-26608811',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.16',
-  'unifunc' => 'content_56a01d2b5cf539_96333830',
+  'unifunc' => 'content_56a18e784e3977_03215879',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_56a01d2b5cf539_96333830')) {function content_56a01d2b5cf539_96333830($_smarty_tpl) {?>
+<?php if ($_valid && !is_callable('content_56a18e784e3977_03215879')) {function content_56a18e784e3977_03215879($_smarty_tpl) {?>
 <link rel="apple-touch-icon" sizes="57x57" href="client/_modules/_favicon/images/apple-touch-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="client/_modules/_favicon/images/apple-touch-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="client/_modules/_favicon/images/apple-touch-icon-72x72.png">

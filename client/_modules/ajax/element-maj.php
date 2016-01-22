@@ -18,6 +18,7 @@
         $data->get_projets();
         $data->get_champs();
         $data->get_elements_champs();
+
         
         // Rendre la vue
 
@@ -30,6 +31,7 @@
         $smarty->assign('select_check_categorie', $__POST['categorie']);
         $smarty->assign('select_check_projet', $__POST['projet']);
         $smarty->assign('id_element', $__POST['id_element']);
+        $smarty->assign('onglet', $__POST['onglet']);
         $dataAjax = $smarty->fetch("edit.tpl");
         echo $dataAjax;
   
@@ -45,7 +47,7 @@
         $data->get_champs();
         $data->get_elements_champs();
         
-        
+
         
         // Rendre la vue
         

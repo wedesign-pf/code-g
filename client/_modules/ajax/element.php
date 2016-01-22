@@ -15,7 +15,6 @@
     $data->get_projets();
     $data->get_champs();
     $data->get_elements_champs();
-    $data->get_list_champs_categories();
 
 
 

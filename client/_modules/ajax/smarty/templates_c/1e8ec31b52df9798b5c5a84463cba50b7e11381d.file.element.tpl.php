@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 13:50:04
+<?php /* Smarty version Smarty-3.1.16, created on 2016-01-21 16:12:58
          compiled from "element.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:869356a01d2c5c9155-94444916%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:474756a1902ad96039-90023056%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1e8ec31b52df9798b5c5a84463cba50b7e11381d' => 
     array (
       0 => 'element.tpl',
-      1 => 1453332823,
+      1 => 1453427924,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '869356a01d2c5c9155-94444916',
+  'nocache_hash' => '474756a1902ad96039-90023056',
   'function' => 
   array (
   ),
@@ -22,20 +22,19 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'list_select_categorie' => 0,
     'categorie' => 0,
     'list_elements' => 0,
-    'SessionIdType' => 0,
     'vElement' => 0,
+    'SessionIdType' => 0,
     'list_categories' => 0,
     'list_projets' => 0,
-    'list_champs' => 0,
-    'row' => 0,
     'kElement' => 0,
     'list_elements_champs' => 0,
+    'row' => 0,
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.16',
-  'unifunc' => 'content_56a01d2c82a753_81002348',
+  'unifunc' => 'content_56a1902b0b5238_62006002',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_56a01d2c82a753_81002348')) {function content_56a01d2c82a753_81002348($_smarty_tpl) {?><div class="container-fluid">
+<?php if ($_valid && !is_callable('content_56a1902b0b5238_62006002')) {function content_56a1902b0b5238_62006002($_smarty_tpl) {?><div class="container-fluid">
 <div class="col-lg-12">
 <!-- Row top nav -->
 <div class="row">
@@ -46,9 +45,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 <div class="row">
                     <div class="col-sm-6">
                         <div id="navbar-header" class="navbar-header">
-                            <h4 style="line-height: 38px;">
-                                <?php echo $_smarty_tpl->tpl_vars['label_heading']->value;?>
- :
+                            <h4 style="line-height: 38px;"><span id="label_heading"><?php echo $_smarty_tpl->tpl_vars['label_heading']->value;?>
+</span> :
                                 <span style="color:#337ab7"><?php echo $_smarty_tpl->tpl_vars['title_heading']->value;?>
 </span>
                             </h4> 
@@ -99,7 +97,8 @@ $_smarty_tpl->tpl_vars['vElement']->_loop = true;
 ?>
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-info">
+        <div id="panel-element" class="panel panel-info" data-panel="<?php echo $_smarty_tpl->tpl_vars['vElement']->value['id'];?>
+">
             <!-- Panel Heading -->
             <div class="panel-heading">
                <?php if ($_smarty_tpl->tpl_vars['SessionIdType']->value<2) {?>
@@ -131,43 +130,39 @@ $_smarty_tpl->tpl_vars['vElement']->_loop = true;
             </div><!-- /.Panel Heading -->
             <!-- Panel Body -->
             <div class="panel-body element">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <!-- Liste des champs -->
-                        <?php  $_smarty_tpl->tpl_vars['row'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['row']->_loop = false;
- $_from = $_smarty_tpl->tpl_vars['list_champs']->value[$_smarty_tpl->tpl_vars['vElement']->value['id_categorie']]; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-foreach ($_from as $_smarty_tpl->tpl_vars['row']->key => $_smarty_tpl->tpl_vars['row']->value) {
-$_smarty_tpl->tpl_vars['row']->_loop = true;
-?>
-                            <span><strong><?php echo $_smarty_tpl->tpl_vars['row']->value;?>
-</strong></span><br><br>
-                        <?php } ?>
-                        <?php if ($_smarty_tpl->tpl_vars['vElement']->value['remarques']) {?>
-                        <span><strong>Remarques</strong></span><br><br>
-                        <?php }?>
-                    </div>
-                    <div class="col-sm-8 listChamp">
-                        
-                        <?php  $_smarty_tpl->tpl_vars['row'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['row']->_loop = false;
+                <?php  $_smarty_tpl->tpl_vars['row'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['row']->_loop = false;
  $_smarty_tpl->tpl_vars['k'] = new Smarty_Variable;
  $_from = $_smarty_tpl->tpl_vars['list_elements_champs']->value[$_smarty_tpl->tpl_vars['kElement']->value]; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['row']->key => $_smarty_tpl->tpl_vars['row']->value) {
 $_smarty_tpl->tpl_vars['row']->_loop = true;
  $_smarty_tpl->tpl_vars['k']->value = $_smarty_tpl->tpl_vars['row']->key;
 ?>
-                        <span id="champValue" class="champValue"><?php echo $_smarty_tpl->tpl_vars['row']->value['valeur'];?>
+                <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                        <span><strong><?php echo $_smarty_tpl->tpl_vars['row']->value['champ'];?>
+</strong></span><br><br>
+                    </div>
+                    <div class="col-sm-12 col-md-8 listChamp">
+                        <span id="champValue" class="champValue" data-id-champ="<?php echo $_smarty_tpl->tpl_vars['row']->value['id'];?>
+"><?php echo $_smarty_tpl->tpl_vars['row']->value['valeur'];?>
 </span>
                         <a  id="clipboard" data-toggle="tooltip" data-placement="right" data-original-title="Copier l'élément">
                             <i class="fa fa-clipboard"></i>
                         </a>
-                        <br><br>
-                        <?php } ?>
-                        <?php if ($_smarty_tpl->tpl_vars['vElement']->value['remarques']) {?>
-                        <span class="champValue"><?php echo $_smarty_tpl->tpl_vars['vElement']->value['remarques'];?>
-</span>
-                        <?php }?>
                     </div>
                 </div>
+                <?php } ?>
+                <!--<?php if ($_smarty_tpl->tpl_vars['vElement']->value['remarques']) {?>-->
+                <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                        <span><strong>Remarques</strong></span><br><br>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <span class="champValue remarques"><?php echo $_smarty_tpl->tpl_vars['vElement']->value['remarques'];?>
+</span>
+                    </div>
+                </div>
+                <!--<?php }?>-->
             </div><!-- /.Panel Body -->
         </div>
     </div>
@@ -243,7 +238,7 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
     });
 
 
-    // Clique sur bouton editer
+    // Clique sur bouton modifier
     $(".panel").on("click",".panel-heading button.editer", function(event){
 
 
@@ -251,7 +246,11 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
         var FormAction = $(this).attr("data-action");
         var PanelHeading = $(event.target).parent().parent();
         var TitleHeadingClass = PanelHeading.find('h4').attr('class');
+        var Panel = PanelHeading.parent();
+        var content_modal = $("#formEdit .modal-content");
+        var Onglet = $("#label_heading").text();
 
+        
         if(TitleHeadingClass == "categorie"){
            TitleCategorie = PanelHeading.find('h4').text();
            TitleProjet  = $('#navbar-header h4 span').text();
@@ -260,53 +259,23 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
             TitleCategorie = $('#navbar-header h4 span').text();
         }
 
-        var content_modal = $("#formEdit .modal-content");
+        
 
 
         $.ajax({
             type: "POST",
             cache:false,
             url: 'client/_modules/ajax/element-maj.php',
-            data:"id_element="+IdElement+"&action="+FormAction+"&categorie="+TitleCategorie+"&projet="+TitleProjet,
+            data:"id_element="+IdElement+"&action="+FormAction+"&categorie="+TitleCategorie+"&projet="+TitleProjet+"&onglet="+Onglet,
             dataType: 'html',
                 success: function(data){
                     content_modal.empty().append(data);
+                    
                 }
             });  
         
     });
 
-    
- 
-    
-    
-    
-   /* $(".panel-heading button.modifier").click(function(event){
-
-
-
-        var IdElement = $(this).attr("data-id-element");
-
-        $("#page-wrapper").fadeOut();
-        $("#loader-gif").fadeIn();
-
-        $.ajax({
-            type: "GET",
-            cache:false,
-            url: 'client/_modules/ajax/element-maj.php',
-            data:"idelement="+IdElement,
-            dataType: 'html',
-                success: function(donnee) {
-
-                    $("#page-wrapper").empty();
-                    $("#page-wrapper").append(donnee);
-                    $("#loader-gif").fadeOut();
-                    $("#page-wrapper").fadeIn();
-                    }
-        });
-
-
-    });*/
 
 </script>
 

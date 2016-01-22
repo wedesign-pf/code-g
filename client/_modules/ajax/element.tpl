@@ -9,8 +9,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div id="navbar-header" class="navbar-header">
-                            <h4 style="line-height: 38px;">
-                                {$label_heading} :
+                            <h4 style="line-height: 38px;"><span id="label_heading">{$label_heading}</span> :
                                 <span style="color:#337ab7">{$title_heading}</span>
                             </h4> 
                         </div> 
@@ -46,7 +45,7 @@
 {foreach $list_elements as $kElement => $vElement }
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-info">
+        <div id="panel-element" class="panel panel-info" data-panel="{$vElement['id']}">
             <!-- Panel Heading -->
             <div class="panel-heading">
                {if $SessionIdType < 2}
@@ -71,30 +70,29 @@
             </div><!-- /.Panel Heading -->
             <!-- Panel Body -->
             <div class="panel-body element">
+                {foreach $list_elements_champs[$kElement] as $k => $row}
                 <div class="row">
-                    <div class="col-sm-2">
-                        <!-- Liste des champs -->
-                        {foreach $list_champs[$vElement['id_categorie']] as $row}
-                            <span><strong>{$row}</strong></span><br><br>
-                        {/foreach}
-                        {if $vElement['remarques']}
-                        <span><strong>Remarques</strong></span><br><br>
-                        {/if}
+                    <div class="col-sm-12 col-md-2">
+                        <span><strong>{$row['champ']}</strong></span><br><br>
                     </div>
-                    <div class="col-sm-8 listChamp">
-                        
-                        {foreach $list_elements_champs[$kElement] as $k => $row}
-                        <span id="champValue" class="champValue">{$row['valeur']}</span>
+                    <div class="col-sm-12 col-md-8 listChamp">
+                        <span id="champValue" class="champValue" data-id-champ="{$row['id']}">{$row['valeur']}</span>
                         <a  id="clipboard" data-toggle="tooltip" data-placement="right" data-original-title="Copier l'élément">
                             <i class="fa fa-clipboard"></i>
                         </a>
-                        <br><br>
-                        {/foreach}
-                        {if $vElement['remarques']}
-                        <span class="champValue">{$vElement['remarques']}</span>
-                        {/if}
                     </div>
                 </div>
+                {/foreach}
+                <!--{if $vElement['remarques']}-->
+                <div class="row">
+                    <div class="col-sm-12 col-md-2">
+                        <span><strong>Remarques</strong></span><br><br>
+                    </div>
+                    <div class="col-sm-12 col-md-8">
+                        <span class="champValue remarques">{$vElement['remarques']}</span>
+                    </div>
+                </div>
+                <!--{/if}-->
             </div><!-- /.Panel Body -->
         </div>
     </div>
@@ -178,7 +176,11 @@
         var FormAction = $(this).attr("data-action");
         var PanelHeading = $(event.target).parent().parent();
         var TitleHeadingClass = PanelHeading.find('h4').attr('class');
+        var Panel = PanelHeading.parent();
+        var content_modal = $("#formEdit .modal-content");
+        var Onglet = $("#label_heading").text();
 
+        
         if(TitleHeadingClass == "categorie"){
            TitleCategorie = PanelHeading.find('h4').text();
            TitleProjet  = $('#navbar-header h4 span').text();
@@ -187,17 +189,18 @@
             TitleCategorie = $('#navbar-header h4 span').text();
         }
 
-        var content_modal = $("#formEdit .modal-content");
+        
 
 
         $.ajax({
             type: "POST",
             cache:false,
             url: 'client/_modules/ajax/element-maj.php',
-            data:"id_element="+IdElement+"&action="+FormAction+"&categorie="+TitleCategorie+"&projet="+TitleProjet,
+            data:"id_element="+IdElement+"&action="+FormAction+"&categorie="+TitleCategorie+"&projet="+TitleProjet+"&onglet="+Onglet,
             dataType: 'html',
                 success: function(data){
                     content_modal.empty().append(data);
+                    
                 }
             });  
         

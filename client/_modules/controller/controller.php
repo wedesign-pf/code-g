@@ -136,16 +136,7 @@ class Controller{
             }
         }
     }
-    
-    
-    public function get_list_champs_categories(){
-        foreach($this->list_id_champs as $key => $row){
-            foreach($this->list_id_champs[$key] as $k){
-                $this->list_champs_categories[$key][$k] = $this->list_champs[$k];
-            }  
-        }
-    }
-    
+        
     
     public function del_prefix_auteur($tableau, $prefix){
 
@@ -187,73 +178,163 @@ class Controller{
         }
     }
     
+    
     // Récupérer les champs des catégories qui ne sont associés à aucun élément
     public function get_champs_null($id_categorie){
 
         $this->get_categories();
         $this->get_champs();
-        
-        foreach($this->list_id_champs[$id_categorie] as $row){
+
+        foreach($this->list_id_champs[$id_categorie] as $k => $row){
             
             if(array_key_exists($row, $this->list_champs)){
-            $this->list_elements_champs_null[]['champ'] = $this->list_champs[$row];
+                $this->list_elements_champs_null[$k]['id'] = $this->list_id_champs[$id_categorie][$k];
+                $this->list_elements_champs_null[$k]['champ'] = $this->list_champs[$row];
             
             }
-        }
-
-        
-        
-        
+        }    
     }
     
     
         
     public function submit_edit($tableau){
-        
-        global $thisSite;
-        
-        
-        $idElement = $tableau['id_element'];
-        $titreElement = $new = htmlspecialchars($tableau['titre_element'], ENT_QUOTES);
 
-        // Changer le titre de l'élément
-        
+        global $thisSite;
         $PDO = new myPDO(); 
+
         
-        $result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements SET titre='$titreElement' WHERE id=$idElement");
-        //$result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements SET titre='TESTING' WHERE id=$idElement" );
+        $idElement          =   $tableau['id_element'];
+        $titreElement       =   htmlspecialchars($tableau['titre_element'], ENT_QUOTES);
+        $remarquesElement   =   htmlspecialchars($tableau['remarques'], ENT_QUOTES);
+        $idProjet           =   $tableau['id_projet'];
+        $idCategorie        =   $tableau['id_categorie'];
+
+        
+        $this->update_elements_champs($tableau, $idElement);
+        
+        //$this->update_listchamp_categorie($tableau, $idCategorie);
+            
+        $this->sumbit_check_onglet($idProjet, $idCategorie, $idElement);
+        
+        // UPDATE ELEMENT
+        $result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements 
+                                        SET titre           =   '$titreElement',
+                                            remarques       =   '$remarquesElement',
+                                            id_projet       =   '$idProjet', 
+                                            id_categorie    =   '$idCategorie' 
+                                            WHERE id        =    $idElement");
+
+        
 
         if(isset($result)){
-            $tab = array('message' => 'success');
-            echo json_encode($tab);
+            $this->tabJson = array('message'          =>  'success',
+                         'id_element'       =>  $idElement,
+                         'titre_element'    =>  $titreElement,
+                         'remarques'        =>  $remarquesElement,
+                         'clear_panel'      =>  $this->clear_panel,
+                         'valeurs'          =>  $this->valeurs
+                        );
+            echo json_encode($this->tabJson);
         }else{
-            $tab = array('message' => 'error');
-            echo json_encode($tab);
+            $this->tabJson = array('message' => 'error');
+            echo json_encode($this->tabJson);
         }
         
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /*
+        Cette methode permet de vérifier s'il y a changement de projet ou de categorie, si c'est le cas faire disparaître l'élément en question
+    */
+    public function sumbit_check_onglet($id_projet, $id_categorie, $id_element){
 
+        
+        global $thisSite;
+         
+        
+        $mySelect = new mySelect(__FILE__);
+        $mySelect->tables=$thisSite->PREFIXE_TBL_CLI . "elements";
+        $mySelect->fields="*";
+        $mySelect->where="actif=:actif AND id=:id AND id_projet=:id_projet AND id_categorie=:id_categorie";  
+        $mySelect->whereValue["id"]=$id_element;
+        $mySelect->whereValue["id_projet"]=$id_projet;
+        $mySelect->whereValue["id_categorie"]=$id_categorie;
+        $mySelect->whereValue["actif"]="1";
+        $result =$mySelect->query();
+        
+        
+        if(empty($result)){
+            $this->clear_panel= true;
+            return $this->clear_panel;
+        }
+        
+    }
+
+    public function update_listchamp_categorie($array, $id){
+        
+        global  $thisSite; 
+        $PDO    =   new myPDO(); 
+        $temp   =   array();
+                
+        foreach($array as $k => $row){    
+            if(is_numeric($k)){
+                $temp[$k]=$k;
+            }
+        }
+        
+        $listChamp = implode(",",$temp);
+        
+        $result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "categories 
+                                      SET     list_champ  =   '$listChamp',
+                                      WHERE   id          =    $id");
+        
+
+        
+    }
+        
+        
+    public function update_elements_champs($array, $id_element){
+        
+        global  $thisSite; 
+        $PDO    =   new myPDO(); 
+        $temp   =   array();
+        
+        $this->get_champs();
+        
+        
+        foreach($array as $k => $row){    
+            if(is_numeric($k)){
+                if(in_array($k, $this->list_champ_crypte)){
+                    $temp[$k]=crypt_string('KEY', $row);
+                }else{
+                    $temp[$k]=$row;
+                }
+            }
+        }
+
+        // UPDATE les valeurs saisie par l'utilisateur elements_champs
+        foreach($temp as $key => $data){
+
+            $result = $PDO->free_requete("UPDATE ".$thisSite->PREFIXE_TBL_CLI . "elements_champs 
+                                SET valeur = '$data'
+                                WHERE ".$thisSite->PREFIXE_TBL_CLI . "elements_champs.id_element = $id_element
+                                AND ".$thisSite->PREFIXE_TBL_CLI . "elements_champs.id = $key");
+            
+        }
+
+        
+    
+        /* decrypter le valeurs pour le rendre à la vue */
+        foreach($temp as $kk => $vv){
+            if(in_array($kk, $this->list_champ_crypte)){
+                $temp[$kk]=decrypt_string('KEY', $vv);
+            }
+        }
+        
+        $this->valeurs = $temp;
+        
+        
+    }
+      
 }
 ?>

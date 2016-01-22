@@ -1,22 +1,23 @@
-<?php /* Smarty version Smarty-3.1.16, created on 2016-01-20 13:56:14
+<?php /* Smarty version Smarty-3.1.16, created on 2016-01-21 16:11:31
          compiled from "edit.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1348156a01e9ea917f3-95779057%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:65456a18fd379d497-69682603%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '06fb0186555065a4184d806c306f5cf0f57ea8f1' => 
     array (
       0 => 'edit.tpl',
-      1 => 1453333995,
+      1 => 1453428461,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1348156a01e9ea917f3-95779057',
+  'nocache_hash' => '65456a18fd379d497-69682603',
   'function' => 
   array (
   ),
   'variables' => 
   array (
+    'onglet' => 0,
     'id_element' => 0,
     'select_check_projet' => 0,
     'list_projets' => 0,
@@ -29,9 +30,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.16',
-  'unifunc' => 'content_56a01e9ebff1f5_85399791',
+  'unifunc' => 'content_56a18fd3984c92_85324986',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_56a01e9ebff1f5_85399791')) {function content_56a01e9ebff1f5_85399791($_smarty_tpl) {?><div class="modal-header">
+<?php if ($_valid && !is_callable('content_56a18fd3984c92_85324986')) {function content_56a18fd3984c92_85324986($_smarty_tpl) {?><div class="modal-header">
+    <span id="onglet" style="display:none;"><?php echo $_smarty_tpl->tpl_vars['onglet']->value;?>
+</span>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">Modifier l'élément #<?php echo $_smarty_tpl->tpl_vars['id_element']->value;?>
 </h4>
@@ -177,11 +180,12 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
     
     /* Soumission du formulaire */
     $("#editForm").submit(function(event) {
+
         
         event.preventDefault();
-        
+
         var formData = $(this).serialize();
-        
+
         
         // Faire un appel en ajax pour le traitement de donnée
         $.ajax({
@@ -191,10 +195,10 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
             data:formData,
             dataType: 'json',
                 success: function(data){
-                    
-                    if(data.message == 'success'){
 
-                        // Fermer le modal
+                    if(data.message == 'success'){
+                        
+                        // Fermer le formulaire
                          $('#formEdit').modal( 'hide' );
                         
                         // afficher un petit message d'alert
@@ -207,13 +211,51 @@ $_smarty_tpl->tpl_vars['row']->_loop = true;
                                 });
                           });
                         
-                        // Colorer la partie le panel de l'élément modifier
-                        
-                        
-                        
-                        // Recharger l'élément en question 
-                            // Sinon
-                        // Changer les éléments en utilisant le Dom
+
+                         // Aprés l'enregistrement des valeurs, récupérer directement ces dernières
+                         // pour les ajouter dans le panel. Cela évite de recharger la pages
+                         $('#page-wrapper #panel-element').each(function(index){
+                  
+                                
+                             var CurrentPanelValue = $(this).attr('data-panel');
+                             
+                             
+                             if(data.id_element == CurrentPanelValue){
+                                 
+                                 var titleElement = $(this).find('h5');
+                                 var remarquesElement = $(this).find('span.remarques');
+                                 var Onglet = $("#onglet").text();                         
+                                 var ClearPanel = data.clear_panel;
+                                 
+
+                                 titleElement.empty().append(data.titre_element);
+                                 remarquesElement.empty().append(data.remarques);
+                                 
+                                 if(remarquesElement.html() == null && data.remarques){
+                                    $(this).find('.panel-body .row:last-child').html("<div class='col-sm-12 col-md-2'><span><strong>Remarques</strong></span><br><br></div><div class='col-sm-12 col-md-8'><span class='champValue remarques'>"+data.remarques+"</span></div>"
+                                    );
+                                  }
+                                 
+                                 if(ClearPanel == true){
+                                     $(this).parent().parent().empty();
+                                 }
+
+                                 
+                                 /* Afficher les valeurs modifiés */
+                                 var valeursChamps = $(this).find('span#champValue');
+                                 
+                                 valeursChamps.each(function(){
+
+                                     var idChampValeur = $(this).attr('data-id-champ');                                     
+                                     var ChampValeur = data.valeurs[idChampValeur];
+                                     
+                                     $(this).empty().append(ChampValeur);
+                                     
+                                 });
+                             }
+                                 
+                         });
+
 
                    }else{
                        alert('Une erreur s\'est produit lors de la soumission');
